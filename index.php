@@ -1,43 +1,138 @@
 <?php
-    $a = 5;
-    $b = '05';
-    var_dump($a == $b);         // Почему true? - Проверка по значению,не по типу. Преобразуется к одному типу integer
-    var_dump((int)'012345');     // Почему 12345? - явное преобразование к integer, ноль отбросится
-    var_dump((float)123.0 === (int)123.0); // Почему false? - явное преобразование к разным типам, затем сравнение типов данных
-    var_dump((int)0 === (int)'hello, world'); // Почему true? - вначале происходит явное преобразование к int, строка начинается с буквы - преобразуется в ноль. 0===0.
+// Задание 1
+    $a=mt_rand(-100,100);
+    $b=mt_rand(-100,100);
+    echo "a=".$a." ; "."b=".$b."<br>";
 
-    $x = 10;
-    $y = 26;
-$y=($x+$y)-($x=$y);
-echo '<br>'.'$x='.$x.'<br>'.'$y='.$y;
+    if (($a>=0) && ($b>=0)){ 
+        echo $a-$b;
+    }
+   elseif (($a<0) && ($b<0)) {
+      echo $a*$b;
+    } 
+    else {
+        echo $a+$b;
+    }
+
+echo '<br>';
+    //Задание 2
+    $a=mt_rand(0,15);
+    switch ($a) {
+        case 0:
+            echo 0;
+        case 1:
+            echo 1;
+        case 2:
+            echo 2;
+        case 3:
+            echo 3;
+        case 4:
+            echo 4;
+        case 5:
+            echo 5;
+        case 6:
+            echo 6;
+        case 7:
+            echo 7;
+         case 8:
+            echo 8;
+        case 9:
+            echo 9;
+        case 10:
+            echo 10;
+        case 11:
+            echo 11;
+        case 12:
+            echo 12;
+        case 13:
+            echo 13;
+        case 14:
+            echo 14;
+        case 15:
+            echo 15;
+        break;
+    }
+
+
+    //Задание3
+function add($a,$b) {
+    return $a+$b;
+}
+
+function subtract($a,$b) {
+    return $a-$b;
+}
+
+function multiply($a,$b) {
+    return $a*$b;
+}
+
+function divide($a,$b) {
+    return $a/$b;
+}
+
+
+    //Задание4
+function mathOperation($arg1, $arg2, $operation="Сложение"){
+    switch ($operation) {
+        case 'Сложение':
+           echo add($arg1, $arg2);
+            break;
+        case 'Вычитание':
+           echo subtract($arg1, $arg2);
+            break;
+        case 'Умножение':
+           echo multiply($arg1, $arg2);
+            break;
+        case 'Деление':
+           echo divide($arg1, $arg2);
+            break;
+}
+}
+echo '<br>';
+mathOperation (5, 6, "Умножение");
+
+    //Задание6
+function power($val, $pow){
+    if ($pow==1){
+        return $val;
+    }
+    return $val*power($val, $pow-1);
+}
+
+echo '<br>';
+echo power (3,4);
+
+
+
+    //Задание7
+
+function getHours(){
+    $hour=date('H',time());
+    if (($hour==1) || ($hour==21)){
+        return $hour." час";
+    }
+    elseif ((($hour>1)&&($hour<5))||($hour>21)){
+        return $hour." часа";
+    }
+    return $hour." часов";
+}
+
+function getMinutes(){
+    $min=date('i',time());
+    if (($min==1) || ($min[1]==1)){
+        return $min." минута";
+    }
+    elseif ((($min>1)&&($min<5))||(($min[1]>1)&&($min[1]<5))){
+        return $min." минуты";
+    }
+    return $min." минут";
+}
+
+function currentTime(){
+    echo getHours()." ".getMinutes();
+}
+
+echo '<br>';
+currentTime()
 ?>
-    <?php
-/*По умолчанию функцию date(), getdate() выводит московское время, 
-насколько понимаю - время сервера. У меня на компьюторе красноярское время(МСК+4).
-Есть ли возможность автоматического определения часового пояса на стороне пользователя? */
-
-date_default_timezone_set('Asia/Krasnoyarsk');
-$date= date("<p> Сегодня: j-m-Y</p>");
-$time= date("<p> Сейчас G ч. i мин.</p>");
-
-define('BR', '<br>');
-$headline= '<h1> Время и дата в Красноярске:</h1>';
-$newtitle = 'Time in Krasnoyarsk';
-
-?>
-        <!DOCTYPE html>
-        <html lang="en">
-
-        <head>
-            <meta charset="UTF-8">
-            <title>
-                <?= $newtitle ?>
-            </title>
-        </head>
-
-        <body>
-            <?= $headline.BR; ?>
-                <?= $date.BR.$time; ?>
-        </body>
-
-        </html>
