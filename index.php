@@ -1,9 +1,8 @@
 <?php
+
 include './engine/autoload.php';
 autoload ('config');
 include ENGINE_DIR.'lesson5_controller.php';
-
-
 
 include PUBLIC_DIR.'header.php';
 
