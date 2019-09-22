@@ -3,6 +3,6 @@
 return [
 	'db_user' => 'root',
 	'db_pass' => '',
-	'db_name' => 'geekbrains',
+	'db_name' => 'testphp8',
 	'db_host' => 'localhost'
 ];

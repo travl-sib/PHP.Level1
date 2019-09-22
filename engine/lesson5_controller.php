@@ -1,13 +1,19 @@
 <?php
+//Все товары
+$goods_bd = mysqli_query(myDbConnect(), "SELECT * FROM goods");
+$goods = [];
 
-$query = 'SELECT * FROM gallery';
+while ($row = mysqli_fetch_assoc($goods_bd)) {
+	$goods[] = $row;
+    
+}
 
-$result_bd = mysqli_query(myDbConnect(), $query);
+//Конкретный товар
+if ($search){
+$result_bd = mysqli_query(myDbConnect(), $search_query);
+$cart = mysqli_fetch_assoc($result_bd);
+}
 
-
-$pictures=[];
-while ($row = mysqli_fetch_assoc($result_bd)){
-    $pictures[] = $row;
- }
 
 mysqli_close(myDbConnect());
+
