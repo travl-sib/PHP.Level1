@@ -1,50 +1,17 @@
 <?php
-include "./config/const.php";
 
-function getImages ($dir) {
-	$bigImages;
-	$smallImages;
+include './engine/autoload.php';
+autoload('config');
 
-	$list = scandir($dir);
-
-	if (!$list){
-		return;}
-	unset($list[0], $list[1]);
-
-	foreach ($list as $file) {
-		if (stristr($file, 'big') && (stristr($file, 'jpg') || stristr($file, 'png'))){
-		$bigImages[]=$file;
-    }
-	elseif (stristr($file, 'small') && (stristr($file, 'jpg') || stristr($file, 'png'))){
-		$smallImages[]=$file;
-}
-}
-	return	array_combine($bigImages, $smallImages);
-}
-
-$images= getImages (IMG_ROOT);
-
-//print_r(getImages (IMG_ROOT))  ;
-
-?>
+include ENGINE_DIR . 'search_controller.php';
+include ENGINE_DIR . 'lesson5_controller.php';
+include ENGINE_DIR . 'calc_controller.php';
 
 
-<!doctype html>
-<html lang="en">
-  <head>
-     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="public/css/style.css">
-    </head> 
-  <body>
+include PUBLIC_DIR . 'header.php';
+include PUBLIC_DIR . 'calculator.php';
+include PUBLIC_DIR . 'modal_insert.php';
 
-<?php  foreach ($images as $simg => $bimg): ?>
-	<a href="<?= "public/img/".$simg?>" target="_blank">
-	<img class="small-img" src="<?= "public/img/".$bimg?>" alt="">
-	</a>
-<?php endforeach;?>
+include PUBLIC_DIR . 'cart_of_good.php';
 
-  </body>
-</html>
-
-
+include PUBLIC_DIR . 'footer.php';
