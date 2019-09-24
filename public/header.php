@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="style/login.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="style/style.css" crossorigin="anonymous">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -13,3 +15,21 @@
     <title>Hello, world!</title>
 </head>
 <body>
+
+
+
+<?php if (!$_SESSION['isAuth']): ?>
+<span>Здравству, гость!</span>
+<a href="login.php">Авторизация</a>
+<br>
+<?php else: ?>
+<span>Здравствуй <strong><?= $_SESSION['username'] ?></strong></span>
+<form method='post'>
+<input type="submit" name="logout" value="Exit">
+
+</form>
+
+<?php endif; ?>
+
+
+<?php  print_r($_SESSION);?>
