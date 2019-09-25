@@ -40,7 +40,9 @@
 <input type="submit" name="buy" value="Купить">
 
 </form>
+      
         <?php endif; ?>
+         <!-- Запись в таблицу Корзина новой позиции -->
         <?php
 if (isset($_POST['buy'])){
     if ($cart['good_name'] && $cart['good_price'] && $cart['id_good'] && $_POST['number'] ) {
@@ -52,20 +54,45 @@ if (isset($_POST['buy'])){
     $user_good = $_SESSION['username'];
 	
 	$insert_query = sprintf("INSERT INTO basket (id_good, name_good, price_good, number_good, user_good ) VALUES (\"%s\" , \"%s\", \"%s\") ;", $id_good, $name_good, $price_good, $number_good, $user_good );
-    
-mysqli_query(myDbConnect(), $insert_query);
-    
-    $query_auth = sprintf('SELECT * FROM basket WHERE id_good = "%s" LIMIT 1;', $id_good);
-    $mysql_auth = mysqli_query(myDbConnect(), $query_auth);
+    mysqli_query(myDbConnect(), $insert_query);
+   
+   // Вывод из Корзины всех позиций
+  
+$query_basket = sprintf('SELECT * FROM basket' );
+  
+   $basket_bd =  mysqli_query(myDbConnect(), $query_basket);
+        
     $basket= mysqli_fetch_assoc ($mysql_auth);
     }}
 ?>
         
     <?php if ($basket): ?> 
-       
-        Вы собираетесь купить:    <?=$basket['name_good'];?>
-        В колличестве: <?=$basket['number_good'];?>
-        На сумму: <?=(int) $basket['number_good'] * (int) $basket['price_good'];?>
+      <?php $total = 0;?>
+    
+     <?php foreach ($basket as $good):  ?>  
+        Вы собираетесь купить:    <?=$good['name_good'];?>
+        В колличестве: <?=$good['number_good'];?>
+        На сумму: <?= $cost = (int) $good['number_good'] * (int) $good['price_good'];?>
+        
+            <?php $total +=$cost;?>
+             
+        <form action='../engine/delete_good.php' method='post'>
+         <p>Удалить товар</p>
+         <input type="hiden" name="delet_good" value="<?=$good['id_good'];?>">
+          <input type="submit" name="delet" value="Удалить">
+
+</form>
+        
+        <?php endforeach; ?>  
+        
+           Итого: <?=$total;?> рублей.
+           
+<form action='../engine/delete_good.php' method='post'>
+    <p>Удалить всё</p>
+    <input type="hiden" name="delet_all" value="1">
+    <input type="submit" name="delet" value="Удалить">
+
+</form>
         <?php endif; ?>  
   
 
@@ -73,3 +100,6 @@ mysqli_query(myDbConnect(), $insert_query);
 	Добавить отзыв
 </button>
   </div>
+
+  
+  
