@@ -16,9 +16,10 @@ if (isset($_POST['login']) && isset($_POST['password'])){
     
     $user = getUser($login);
 if ($user){
-    if (password_verify($password, $user['password'])){
+    if (password_verify($password, $user['user_password'])){
         $_SESSION['isAuth'] = true;
-        $_SESSION['username'] = $user['username'];
+        $_SESSION['username'] = $user['user_name'];
+        $_SESSION['id_user'] = $user['id_user'];
         header ('location: /index.php');
         die;
     }

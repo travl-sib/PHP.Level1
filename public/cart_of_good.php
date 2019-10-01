@@ -40,43 +40,42 @@
 <input type="submit" name="buy" value="Купить">
 
 </form>
-      
         <?php endif; ?>
-         <!-- Запись в таблицу Корзина новой позиции -->
         <?php
 if (isset($_POST['buy'])){
     if ($cart['good_name'] && $cart['good_price'] && $cart['id_good'] && $_POST['number'] ) {
 
-	$name_good = $cart['good_name'];
+	$good_name = $cart['good_name'];
     $id_good = $cart['id_good'];
-    $price_good = $cart['good_price'];
+    $price = $cart['good_price'];
      $number_good = $_POST['number']; 
-    $user_good = $_SESSION['username'];
+    $id_user = $_SESSION['id_user'];
 	
-	$insert_query = sprintf("INSERT INTO basket (id_good, name_good, price_good, number_good, user_good ) VALUES (\"%s\" , \"%s\", \"%s\") ;", $id_good, $name_good, $price_good, $number_good, $user_good );
-    mysqli_query(myDbConnect(), $insert_query);
+	$insert_basket = sprintf("INSERT INTO basket (id_good,  price, amount, id_user ) VALUES (\"%s\" ,  \"%s\",\"%s\",\"%s\") ;", $id_good, $price, $number_good, $id_user );
    
-   // Вывод из Корзины всех позиций
-  
-$query_basket = sprintf('SELECT * FROM basket' );
-  
-   $basket_bd =  mysqli_query(myDbConnect(), $query_basket);
+    mysqli_query(myDbConnect(), $insert_basket);
         
-    $basket= mysqli_fetch_assoc ($mysql_auth);
+        // Вывод из Корзины всех позиций
+    
+    $query_basket = sprintf('SELECT * FROM basket ');
+    $basket_bd = mysqli_query(myDbConnect(), $query_basket);
+    $basket= mysqli_fetch_assoc ($basket_bd);
     }}
 ?>
         
     <?php if ($basket): ?> 
-      <?php $total = 0;?>
-    
-     <?php foreach ($basket as $good):  ?>  
-        Вы собираетесь купить:    <?=$good['name_good'];?>
-        В колличестве: <?=$good['number_good'];?>
-        На сумму: <?= $cost = (int) $good['number_good'] * (int) $good['price_good'];?>
+       <?php $total = 0;?>
+      <?php foreach ($basket as $good):  ?>
+       
+        Вы собираетесь купить:    <?=$basket['good_name'];?>
+        В колличестве: <?=$basket['amount'];?>
+        На сумму: <?=(int) $basket['amount'] * (int) $basket['price'];?>
         
-            <?php $total +=$cost;?>
-             
-        <form action='../engine/delete_good.php' method='post'>
+        
+     <?php $total +=$cost;?>
+     
+     <!-- Удаление товара -->
+      <form action='../engine/delete_good.php' method='post'>
          <p>Удалить товар</p>
          <input type="hiden" name="delet_good" value="<?=$good['id_good'];?>">
           <input type="submit" name="delet" value="Удалить">
@@ -84,22 +83,10 @@ $query_basket = sprintf('SELECT * FROM basket' );
 </form>
         
         <?php endforeach; ?>  
-        
-           Итого: <?=$total;?> рублей.
-           
-<form action='../engine/delete_good.php' method='post'>
-    <p>Удалить всё</p>
-    <input type="hiden" name="delet_all" value="1">
-    <input type="submit" name="delet" value="Удалить">
-
-</form>
         <?php endif; ?>  
-  
+           Итого: <?=$total;?> рублей.
 
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" value="<?=$cart['id_good'];?>" name="feedback">
 	Добавить отзыв
 </button>
   </div>
-
-  
-  

@@ -8,10 +8,11 @@ if ($_POST['feedback'] && $_POST['name'] && $_POST['id']) {
     $id = $_POST['id'];
     $name = $_POST['name'];
 	
-	$insert_query = sprintf("INSERT INTO feedback (feedback_body, feedback_user, id_good) VALUES (\"%s\" , \"%s\", \"%s\") ;", $feedback, $name, $id);
+	$insert_query = sprintf("INSERT INTO feedback (feedback_body, feedback_user) VALUES (\"%s\" , \"%s\") ;", $feedback, $name);
     
     
 mysqli_query(myDbConnect(), $insert_query);
+   
 }
 
 header("location: /index.php");

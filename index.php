@@ -17,9 +17,11 @@ include ENGINE_DIR . 'delete_good.php';
 include PUBLIC_DIR . 'header.php';
 
 include PUBLIC_DIR . 'auth_check.php';
-include PUBLIC_DIR . 'search.php';
+//include PUBLIC_DIR . 'search.php';
+//include PUBLIC_DIR . 'db-table__less5.php';
 include PUBLIC_DIR . 'cart_of_good.php';
 include PUBLIC_DIR . 'modal_insert.php';
+ print_r($insert_query);
 
 include PUBLIC_DIR . 'footer.php';
 ?>
