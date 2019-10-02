@@ -57,19 +57,21 @@ if (isset($_POST['buy'])){
         
         // Вывод из Корзины всех позиций
     
-    $query_basket = sprintf('SELECT * FROM basket ');
+    $query_basket = 'SELECT * FROM basket;';
     $basket_bd = mysqli_query(myDbConnect(), $query_basket);
-    $basket= mysqli_fetch_assoc ($basket_bd);
-    }}
+    $basket=[];
+    while ($row = mysqli_fetch_assoc ($basket_bd)) {
+	$basket[] = $row;
+    }}}
 ?>
-        
+     
     <?php if ($basket): ?> 
        <?php $total = 0;?>
       <?php foreach ($basket as $good):  ?>
        
-        Вы собираетесь купить:    <?=$basket['good_name'];?>
-        В колличестве: <?=$basket['amount'];?>
-        На сумму: <?=(int) $basket['amount'] * (int) $basket['price'];?>
+        Вы собираетесь купить:    <?= $good['id_good']; ?>
+        В колличестве: <?= $good['amount'];?>
+        На сумму: <?=$cost= (int) $good['amount'] * (int) $good['price'];?>
         
         
      <?php $total +=$cost;?>
